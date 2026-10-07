@@ -1,0 +1,23 @@
+plugins { id 'net.minecraftforge.gradle' version '[6.0,6.2)' }
+version = '1.0.4'
+group = 'dev.singleplayertrash'
+base { archivesName = 'singleplayertrash-forge-1.20.1' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+minecraft { mappings channel: 'official', version: '1.20.1' }
+repositories {
+ maven { url = 'https://maven.blamejared.com/' }
+ maven { url = 'https://api.modrinth.com/maven' }
+}
+dependencies {
+ minecraft 'net.minecraftforge:forge:1.20.1-47.4.6'
+ compileOnly fg.deobf('mezz.jei:jei-1.20.1-common-api:15.20.0.116')
+ compileOnly fg.deobf('mezz.jei:jei-1.20.1-forge-api:15.20.0.116')
+ // Public Modrinth Maven version ID: EMI 1.1.24+1.20.1+forge.
+ compileOnly fg.deobf('maven.modrinth:emi:Axuu9I9R')
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+jar {
+ from('LICENSE')
+ from('THIRD_PARTY_NOTICES.md')
+ finalizedBy 'reobfJar'
+}
